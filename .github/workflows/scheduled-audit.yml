@@ -6,12 +6,24 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
+        
+      - name: Cache audit
+        uses: actions/cache@v3
+        id: cache-audit
+        with:
+          path: |
+            ~/.cargo/bin/audit
+          key: ${{ runner.os }}-audit
       
       - name: Install audit
+        if: steps.cache-audit.outputs.cache-hit == false
         run: cargo install cargo-audit
 
       - name: Run audit

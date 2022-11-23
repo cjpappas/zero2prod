@@ -145,7 +145,6 @@ jobs:
     env:
       SQLX_VERSION: 0.6.2
       SQLX_FEATURES: "rustls,postgres"
-      TARPAULIN_VERSION: 0.23.1
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -188,7 +187,7 @@ jobs:
         with:
           path: |
             ~/.cargo/bin/tarpaulin
-          key: ${{ runner.os }}-tarpaulin-${{ env.TARPAULIN_VERSION }}
+          key: ${{ runner.os }}-tarpaulin
       
       - name: Install tarpuaulin
         if: steps.cache-tarpaulin.outputs.cache-hit == false
